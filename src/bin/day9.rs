@@ -21,11 +21,14 @@ fn main() {
             i += 1;
             continue;
         }
+		if c == '<' {
+			garbage = true;
+		}
         if c == '{' {
             part1 += score;
             score += 1;
         }
-        if c == '}' && score > 1 {
+        if c == '}' {
             score -= 1;
         }
         i += 1;
