@@ -19,4 +19,18 @@ fn main() {
 
 	let part1 = chain[chain.iter().find(|x| x.0 == 2017).unwrap().1].0;
 	println!("Day 17 part 1: {}", part1);
+
+	// It can be found before 50 million
+	for i in 2018..7000000 {
+		for _ in 0..input {
+			curr = chain[curr].1;
+		}
+		let next = chain[curr].1;
+		chain[curr].1 = chain.len();
+		curr = chain.len();
+		chain.push((i, next));
+	}
+
+	let part2 = chain[chain.iter().find(|x| x.0 == 0).unwrap().1].0;
+	println!("Day 17 part 1: {}", part2);
 }
