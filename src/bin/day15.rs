@@ -26,4 +26,32 @@ fn main() {
 	}
 
 	println!("Day 15 part 1: {}", part1);
+
+	let mut lasta = ga;
+	let mut lastb = gb;
+
+	let mut part2 = 0;
+
+	for _ in 0..5000000 {
+		loop {
+			lasta *= af;
+			lasta %= 2147483647;
+			if lasta % 4 == 0 {
+				break;
+			}
+		}
+		loop {
+			lastb *= bf;
+			lastb %= 2147483647;
+			if lastb % 8 == 0 {
+				break;
+			}
+		}
+
+		if lasta & (u16::MAX as u128) == lastb & (u16::MAX as u128) {
+			part2 += 1;
+		}
+	}
+
+	println!("Day 15 part 2: {}", part2);
 }
