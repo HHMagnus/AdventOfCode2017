@@ -1,4 +1,4 @@
-use std::{collections::{HashMap, VecDeque}, fs::read_to_string};
+use std::{collections::{HashMap, HashSet, VecDeque}, fs::read_to_string};
 
 fn main() {
     let file = read_to_string("input/day12.txt").unwrap();
@@ -29,7 +29,7 @@ fn main() {
 	
 	let mut part2 = 0;
 
-	let mut visited = Vec::new();
+	let mut visited = HashSet::new();
 	while let Some((&start, _)) = states.iter().find(|x| !visited.contains(x.0)) {
 		part2 += 1;
 		let mut queue = VecDeque::new();
@@ -39,7 +39,7 @@ fn main() {
 			let vec = states.get(next).unwrap();
 			for v in vec {
 				if visited.contains(v) { continue; }
-				visited.push(v);
+				visited.insert(v);
 				queue.push_back(v);
 			}
 		}
