@@ -7,6 +7,7 @@ fn main() {
     let mut score = 1;
     let mut part1 = 0;
     let mut garbage = false;
+	let mut part2 = 0;
 
     let mut i = 0;
     while i < chars.len() {
@@ -14,11 +15,15 @@ fn main() {
         if garbage {
             if c == '>' {
                 garbage = false;
+				i += 1;
+				continue;
             }
             if c == '!' {
-                i += 1;
+                i += 2;
+				continue;
             }
             i += 1;
+			part2 += 1;
             continue;
         }
 		if c == '<' {
@@ -35,4 +40,5 @@ fn main() {
     }
 
     println!("Day 9 part 1: {}", part1);
+    println!("Day 9 part 2: {}", part2);
 }
