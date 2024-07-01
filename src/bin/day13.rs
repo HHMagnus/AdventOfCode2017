@@ -27,4 +27,12 @@ fn main() {
 	}
 
 	println!("Day 13 part 1: {}", part1);
+
+	let mut part2 = 0;
+
+	while input.iter().any(|x| (x.0 + part2) % ((x.1 - 1) * 2) == 0) {
+		part2 += 1;
+	}
+
+	println!("Day 13 part 2: {}", part2);
 }
