@@ -1,25 +1,63 @@
-use std::fs::read_to_string;
+use std::{collections::{HashSet, VecDeque}, fs::read_to_string};
 
 fn main() {
     let file = read_to_string("input/day14.txt").unwrap();
 	
 	let mut part1 = 0;
 
-	for i in 0..128 {
-		let str = format!("{}-{}", file, i);
+	let mut used = HashSet::new();
+
+	for y in 0..128 {
+		let str = format!("{}-{}", file, y);
 		let hash = knot_hash(&str);
 
-		for mut x in hash {
-			while x > 0 {
-				if x % 2 == 1 {
+		let mut xs = 0;
+
+		for mut h in hash {
+			for i in 0..8 {
+				if h % 2 == 1 {
 					part1 += 1;
+					used.insert((xs * 8 + 8 - i, y));
 				}
-				x >>= 1;
+				h >>= 1;
 			}
+			xs += 1;
 		}
 	}
-
+	
 	println!("Day 14 part 1: {}", part1);
+
+	let mut visited = HashSet::new();
+	let mut part2 = 0;
+
+	while let Some(&start) = used.iter().find(|&x| !visited.contains(x)) {
+		let mut queue = VecDeque::new();
+		queue.push_back(start);
+		visited.insert(start);
+
+		while let Some(next) = queue.pop_front() {
+			let neighbors = [
+				(next.0 - 1, next.1),
+				(next.0 + 1, next.1),
+				(next.0, next.1 - 1),
+				(next.0, next.1 + 1),
+			];
+			for n in neighbors {
+				if !used.contains(&n) {
+					continue;
+				}
+				if visited.contains(&n) {
+					continue;
+				}
+				visited.insert(n);
+				queue.push_back(n);
+			}
+		}
+
+		part2 += 1;
+	}
+
+	println!("Day 14 part 2: {}", part2);
 }
 
 fn knot_hash(hash: &str) -> Vec<i32> {
