@@ -88,9 +88,21 @@ fn main() {
         }
     }).collect::<Vec<_>>();
 
+
+    let part1 = part1(&instructions);
+    println!("Day 18 part 1: {}", part1);
+}
+
+fn next(val: &Val, registers: &HashMap<char, i64>) -> i64 {
+    match val {
+        Val::Register(x) => *registers.get(x).unwrap_or(&0),
+        Val::Value(x) => *x,
+    }
+}
+
+fn part1(instructions: &Vec<Instruction>) -> i64 {
     let mut last = 0;
     let mut registers = HashMap::new();
-    let mut part1 = false;
 
     let mut i = 0i64;
     while i >= 0 && i < instructions.len() as i64 {
@@ -124,10 +136,7 @@ fn main() {
             Instruction::Rcv(x) => {
                 let val = next(&Val::Register(*x), &registers);
                 if val != 0 {
-                    if !part1 {
-                        println!("Day 18 part 1: {}", last);
-                        part1 = true;
-                    }
+                    return last;
                 }
             },
             Instruction::Jgz(x, y) => {
@@ -142,11 +151,6 @@ fn main() {
 
         i += 1;
     }
-}
 
-fn next(val: &Val, registers: &HashMap<char, i64>) -> i64 {
-    match val {
-        Val::Register(x) => *registers.get(x).unwrap_or(&0),
-        Val::Value(x) => *x,
-    }
+    unreachable!("No part 1 solution");
 }
