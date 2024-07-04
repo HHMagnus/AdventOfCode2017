@@ -27,8 +27,11 @@ fn main() {
 	let mut dir = Dir::Down;
 
 	let mut vec = Vec::new();
+	let mut steps = 0;
 
 	loop {
+		steps += 1;
+
 		let (x, y) = curr;
 		curr = match dir {
 			Dir::Down => (x, y + 1),
@@ -66,4 +69,5 @@ fn main() {
 
 	let part1 = vec.into_iter().collect::<String>();
 	println!("Day 19 part 1: {}", part1);
+	println!("Day 19 part 2: {}", steps);
 }
