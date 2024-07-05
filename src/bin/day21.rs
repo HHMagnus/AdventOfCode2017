@@ -20,6 +20,15 @@ fn main() {
 
 	let part1 = curr.iter().map(|x| x.iter().filter(|&x| x == &'#').count()).sum::<usize>();
 	println!("Day 21 Part 1: {}", part1);
+
+	for _ in 0..18-5 {
+		let s = split(curr);
+		let applied = s.into_iter().map(|x| apply_pattern(x, &patterns)).collect();
+		curr = concat(applied);
+	}
+
+	let part2 = curr.iter().map(|x| x.iter().filter(|&x| x == &'#').count()).sum::<usize>();
+	println!("Day 21 Part 1: {}", part2);
 }
 
 fn flip(input: Vec<Vec<char>>) -> Vec<Vec<char>> {
